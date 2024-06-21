@@ -2,7 +2,7 @@ listNM = []  #nome
 tamanho = []  #altura
 listPS = []  #peso
 listMMC = []  #massa corporal
-listTOTAL = []  #total
+#apaga
 
 
 def addpeso():
@@ -11,57 +11,70 @@ def addpeso():
         while True:
             try:
                 nome = input("digite seu nome ")
-                listNM.append(nome)
+                listNM.append(nome.upper())
+                #uper faz que mesmo em maisculo ou minisculo funcione
                 peso = float(input("digite seu peso "))
                 listPS.append(peso)
                 altura = float(
-                input("Digite sua altura (m): ").replace(',', '.'))
+                    input("Digite sua altura (m): ").replace(',', '.'))
                 tamanho.append(altura)
-                mmc = round(peso / altura**2, 2)
+                mmc = round(peso / altura**2)
                 listMMC.append(mmc)
-
-                registro = {
-                    "nome": nome,
-                    "peso": peso,
-                    "altura": altura,
-                    "mmc": mmc
-                }
-
-                listTOTAL.append(registro)
-
-                print(listTOTAL)
-
+                
                 break
             except ValueError:
                 print("foi feito alguma besteira refaça oq foi feito")
         confirm = input("cadastrar mais 1 ?")
+# LISTAAAAAAA
+def visualizarlista():  #VISUALIZA OS ALUNOS
+    for i in range(len(listNM)):
+        #{1:5.2f} | {2:5.2f} | {3:5.2f} serve para dar espaço contado e |
+        print('{0} | {1:5.2f} | {2:5.2f} | {3:5.2f}'.format(
+            listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+def pesquisar():
+    visualizarlista()
+    while True:
+        apaga = input("quem?")
+        if apaga == '':
+            return
+        if apaga in listNM:
+            i = listNM.index(apaga.upper())
+            break
+        else:
+            print("não existe", apaga)
 
-
-def allaluno():
-    print(listTOTAL)
-    excluir = int(input("qual gostaria de excluir ?"))
-    listTOTAL.pop(excluir)
-    print(listTOTAL)
-
-
-# def Lista():
-
-# def calculo():
-# for i in range(len(listNM)):
-
-
+    print('{0} | {1:5.2f} | {2:5.2f} | {3:5.2f}'.format(
+        listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+def allaluno():  #excluir
+    visualizarlista()
+    while True:
+        apaga = input("escreva o nome que quer pagar11")
+        if apaga == '':
+            return
+        if apaga.upper() in listNM:
+            i = listNM.index(apaga.upper())
+            print(i)
+            break
+        else:
+            print("nao existe")
+    print('{0} ==> EXCLUIDO | {1:5.2f} | {2:5.2f} | {3:5.2f}'.format(
+        listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+    del (listNM[i])
+    del (listPS[i])
+    del (tamanho[i])
+    del (listMMC[i])
+#==================== MENU =============
 #não mudar
 def menu():  #print da tela inicial
     print("1 - quebrar")
     print("2 - add nome, peso e altura")
-    print("3 - Opção")
-    print("4 - Opção")
-
-
+    print("3 - Excluir")
+    print("4 - mostra lista")
+    print("5 - pesquisar aluno")
 while True:  #loop
     menu()
     quebrouloop = -1
-    while quebrouloop <= 1 or quebrouloop >= 5:
+    while quebrouloop <= 1 or quebrouloop >= 6:
         try:
             quebrouloop = int(input("qual Opção?"))
             break
@@ -74,11 +87,15 @@ while True:  #loop
     elif quebrouloop == 3:
         allaluno()
     elif quebrouloop == 4:
-        break
+        visualizarlista()
+
+    elif quebrouloop == 5:
+        pesquisar()
     else:
         print("Deu errado")
-    print("escreva de 1 a 4 ples, este numero não pode", quebrouloop)
-'''Faça um programa que  cadastra os nomes dos alunos,seu peso e altura em três listas. ALUNOS, PESOS,  ALTURAS e IMCs
+    #print("escreva de 1 a 4 ples, este numero não pode", quebrouloop)
+'''Faça um programa que  cadastra os nomes dos alunos,seu peso e altura em três listas. 
+ALUNOS, PESOS,  ALTURAS e IMCs
 faça um menu:
 1-cadastra alunos pesos e alturas
 2-lista todos alunos,   pesos,  altura e imc
