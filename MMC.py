@@ -4,6 +4,14 @@ listPS = []  #peso
 listMMC = []  #massa corporal
 #apaga
 
+# class BreakLoop(Exception):
+#     pass
+
+# def minha_funcao():
+#     # Ações da função
+#     print("Função chamada. Interrompendo o loop.")
+#     raise BreakLoop
+
 
 def addpeso():
     confirm = "S"  #escrever mais 1 ? s ou n
@@ -16,25 +24,34 @@ def addpeso():
                 peso = float(input("digite seu peso "))
                 listPS.append(peso)
                 altura = float(
-                    input("Digite sua altura (m): ").replace(',', '.'))
+                    input("Digite sua altura (EXEMPLO 1,70): ").replace(',', '.'))
                 tamanho.append(altura)
                 mmc = round(peso / altura**2)
                 listMMC.append(mmc)
-                
+
                 break
             except ValueError:
                 print("foi feito alguma besteira refaça oq foi feito")
-        confirm = input("cadastrar mais 1 ?")
+        confirm = input("quer cadastrar mais alguem? (S para continuar)")
+
+
 # LISTAAAAAAA
 def visualizarlista():  #VISUALIZA OS ALUNOS
-    for i in range(len(listNM)):
-        #{1:5.2f} | {2:5.2f} | {3:5.2f} serve para dar espaço contado e |
-        print('{0} | {1:5.2f} | {2:5.2f} | {3:5.2f}'.format(
-            listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+    if not listNM:
+        print("=================== lista vazia =========================")
+    else:
+        for i in range(len(listNM)):
+            #{1:5.2f} | {2:5.2f} | {3:5.2f} serve para dar espaço contado e |
+            print("")
+            print(' Nome {0} | Peso {1:5.2f} | Tamanho {2:5.2f} | MMC {3:5.2f}'.format(
+                listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+
+
 def pesquisar():
     visualizarlista()
     while True:
-        apaga = input("quem?")
+        apaga = input(
+            "qual nome quer pesquisar? (enter sai da tela de list)? ")
         if apaga == '':
             return
         if apaga in listNM:
@@ -44,11 +61,13 @@ def pesquisar():
             print("não existe", apaga)
 
     print('{0} | {1:5.2f} | {2:5.2f} | {3:5.2f}'.format(
-        listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+    listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+
+
 def allaluno():  #excluir
     visualizarlista()
     while True:
-        apaga = input("escreva o nome que quer pagar11")
+        apaga = input("quem deseja apagar? (enter sai da tela de list) ")
         if apaga == '':
             return
         if apaga.upper() in listNM:
@@ -57,20 +76,26 @@ def allaluno():  #excluir
             break
         else:
             print("nao existe")
+
     print('{0} ==> EXCLUIDO | {1:5.2f} | {2:5.2f} | {3:5.2f}'.format(
         listNM[i].ljust(10), listPS[i], tamanho[i], listMMC[i]))
+
     del (listNM[i])
     del (listPS[i])
     del (tamanho[i])
     del (listMMC[i])
+
+
 #==================== MENU =============
 #não mudar
 def menu():  #print da tela inicial
-    print("1 - quebrar")
+    print("1 - finalizar tudo")
     print("2 - add nome, peso e altura")
-    print("3 - Excluir")
+    print("3 - Excluir alguem da lista")
     print("4 - mostra lista")
     print("5 - pesquisar aluno")
+
+
 while True:  #loop
     menu()
     quebrouloop = -1
@@ -88,7 +113,6 @@ while True:  #loop
         allaluno()
     elif quebrouloop == 4:
         visualizarlista()
-
     elif quebrouloop == 5:
         pesquisar()
     else:
