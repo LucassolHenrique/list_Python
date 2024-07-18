@@ -117,6 +117,7 @@ while True:  #loop
         pesquisar()
     else:
         print("Deu errado")
+print
     #print("escreva de 1 a 4 ples, este numero não pode", quebrouloop)
 '''Faça um programa que  cadastra os nomes dos alunos,seu peso e altura em três listas. 
 ALUNOS, PESOS,  ALTURAS e IMCs
