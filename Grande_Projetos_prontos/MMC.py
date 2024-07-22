@@ -86,7 +86,7 @@ def allaluno():  #excluir
     del (listMMC[i])
 
 
-#==================== MENU =============
+#==================== MENU =============+
 #não mudar
 def menu():  #print da tela inicial
     print("1 - finalizar tudo")

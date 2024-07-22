@@ -56,6 +56,10 @@ def vendas():
 
 def maisVendas():
     if Vendas:
+         # max(set(Vendas), key=Vendas.count) faz o seguinte:
+        # - set(Vendas): Cria um conjunto único de produtos vendidos, eliminando duplicatas.
+        # - Vendas.count: Conta quantas vezes cada produto aparece na lista Vendas.
+        # - max: Encontra o produto que aparece mais vezes (o mais vendido).
         # Encontra o produto mais vendido contando as ocorrências na lista Vendas
         produto_mais_vendido = max(set(Vendas), key=Vendas.count)
         print(f"O produto mais vendido é {produto_mais_vendido} com {Vendas.count(produto_mais_vendido)} vendas")
