@@ -1,7 +1,10 @@
 
+import random
 
-
-numero_secreto = 42
+#foi importado o random 
+numero_secreto = random.randrange(1,101) #vai de 1 a 100 (101) é numero que não pode ir 
+#numero_secreto = round(random.random() * 100) #pode ir pra a cima de 100 e como zero coisa que não deveria
+#numero_secreto = numero aleatorio
 total_de_tentativa = 4 #do while 
 rodada = 1
 
