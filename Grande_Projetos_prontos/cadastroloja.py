@@ -1,3 +1,5 @@
+
+
 Produtos = ['Cafe', 'Manga'] #declarando as listas
 Preco = [2.20, 10] #declarando as listas
 Quanti = [10, 20] #declarando as listas

@@ -231,6 +231,7 @@ def check_letras(texto):
 
 def check_espaco(texto):
     return not texto.isspace() and texto != ''
+    
 def hub():
     opcao=input("qual opção voce quer?\n1 - incluir produto\n2 - incluir venda\n3 - relatorio de estoque\n4 - relatorio de venda\n5 - media de vendas\n6 - produto mais vendido\n7 - sair\n")
     opcao_int= int(opcao)

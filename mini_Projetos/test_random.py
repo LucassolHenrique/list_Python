@@ -1,3 +1,5 @@
+
+
 numero_secreto = 42
 total_de_tentativa = 4 #do while 
 rodada = 1

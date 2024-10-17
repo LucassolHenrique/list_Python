@@ -8,6 +8,7 @@ def mostrarListas():
         print(f'Aluno: {alunos[i]}  tem nota = {notas[i]}')
         #  print('aluno:', alunos[i],' tem nota ', notas[i])
     print('#' * 50)
+    
 def insercao():
     print('#' * 30, ' Insere alunos ', '#' * 30, )
     # rotinaa de inserção
@@ -33,6 +34,7 @@ def calcularMedia():
     media=sum(notas) / len(notas)
     print (f'Media da turma = {round(media,2)}')
     print('#' * 60 )
+
 def buscaAlunoNome():
     print('#' * 30, ' Busca aluno ', '#' * 30)
     mostrarListas()
