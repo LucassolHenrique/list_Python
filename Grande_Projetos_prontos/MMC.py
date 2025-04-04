@@ -20,7 +20,9 @@ def addpeso():
             try:
                 nome = input("digite seu nome ")
                 listNM.append(nome.upper())
+
                 #uper faz que mesmo em maisculo ou minisculo funcione
+                
                 peso = float(input("digite seu peso "))
                 listPS.append(peso)
                 altura = float(
