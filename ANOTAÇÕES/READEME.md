@@ -2,8 +2,3 @@
 
 
 
-dia 23/07
-
-não fiz anoção alguma sobre aqui mas ja estou a alguns dias mexendo com isso em meu tempo livre , estou aprendendo algumas bibliotecas python ja que a liguagem por si é facil
-
-
