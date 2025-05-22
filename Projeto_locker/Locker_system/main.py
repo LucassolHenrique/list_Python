@@ -24,9 +24,6 @@ menu_configuracao = """
     +----+-----------------------------------+
     Escolha: """
 
-
-#
-# submenu configuração
 def novo_morador() -> None:
     # sistema.cadastrar_morador(1, Morador("Ana", "101", "1111"))
     # sistema.cadastrar_morador(2, Morador("Clara", "201", "2222"))
@@ -58,12 +55,6 @@ def submenu_configuracao() -> None:
         except RetornarMenu:
             break
 
-# submenu configuração
-###
-
-
-#
-# menugeral
 def entrega() -> None:
     def ler_dados_pacote() -> str | None:
         while True:
