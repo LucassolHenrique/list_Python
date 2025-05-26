@@ -6,7 +6,7 @@
 #
 #.             Em configurações deve existir uma opção de cadastro, onde o usuário irá cadastrar o apartamento e uma senha para utilizar o locker.
 
-from Objetos import Morador
+from class_obj import *
 
 def menu():
   print("\nMenu:")
@@ -33,13 +33,12 @@ while True:
       print("Saindo do aplicativo...")
       break
   elif entrada == 2:
-      print(Morador.mostrar_dados(f"1, João"))
-      
-  # elif entrada == 3:
-  #     status_locker()
-  # elif entrada == 4:
-  #     status_apartamento()
-  # elif entrada == 5:
-  #     criapredio()
-  # elif entrada == 6:
-  #     retirar_produto()
+      realizar_entrega()
+  elif entrada == 3:
+      status_locker()
+  elif entrada == 4:
+      status_apartamento()
+  elif entrada == 5:
+      cadastrar_morador()
+  elif entrada == 6:
+      retirar_produto()
