@@ -1,79 +1,50 @@
-# Sistema de locker de entrega de produtos
+# aqui tem o mesmo codigo que o class.obg mas sem a proteção do __ nós objetos 
+# deixando eles seguros
+# o codigo aumentou umas 40 linhas só em "segurança programador"
 
-class Predio:
-    def __init__(self, numeracao_casa: int) -> None:
-        self.__numeracao_casa = numeracao_casa
 
-    @property
-    def numeracao_casa(self):
-        return self.__numeracao_casa
 
+class predio:
+
+  def __init__(self, numeracao_casa: int) -> None:
+    self.numeracao_casa = numeracao_casa
+    pass
+  
 class Locker:
     def __init__(self, tamanho: str) -> None:
-        self.__tamanho = tamanho
-        self.__disponivel = True
-        self.__apartamento = None
-        self.__senha = None
-
-    @property
-    def tamanho(self):
-        return self.__tamanho
-
-    @property
-    def disponivel(self):
-        return self.__disponivel
-
-    @disponivel.setter
-    def disponivel(self, valor):
-        self.__disponivel = valor
-
-    @property
-    def apartamento(self):
-        return self.__apartamento
-
-    @apartamento.setter
-    def apartamento(self, valor):
-        self.__apartamento = valor
-
-    @property
-    def senha(self):
-        return self.__senha
-
-    @senha.setter
-    def senha(self, valor):
-        self.__senha = valor
+        self.tamanho = tamanho  # 'P', 'M' ou 'G'
+        self.disponivel = True
+        self.apartamento = None
+        self.senha = None
 
     def entregar(self, apartamento: int):
         import random
-        self.__disponivel = False
-        self.__apartamento = apartamento
-        self.__senha = str(random.randint(1000, 9999))
-        print(f"Entrega registrada! Senha enviada para o apartamento {apartamento}: {self.__senha}")
+        self.disponivel = False
+        self.apartamento = apartamento
+        self.senha = str(random.randint(1000, 9999))
+        print(f"Entrega registrada! Senha enviada para o apartamento {apartamento}: {self.senha}")
 
     def retirar(self, senha: str):
-        if self.__senha == senha:
+        if self.senha == senha:
             print("Locker aberto! Retire seu produto.")
-            self.__disponivel = True
-            self.__apartamento = None
-            self.__senha = None
+            self.disponivel = True
+            self.apartamento = None
+            self.senha = None
         else:
             print("Senha incorreta.")
 
 class Morador:
+    
     def __init__(self, nome: str):
-        self.__nome = nome
+        self.nome = nome
 
-    @property
-    def nome(self):
-        return self.__nome
 
-# Listas globais protegidas (por convenção, mas não há encapsulamento real em listas globais)
-moradores = []
-apartamentos = []
-lockers = []
-SENHA_SINDICO = "1234"  # senha mestra usada na retirar_produtos
 
-# Cadastro de morador, apartamento e locker
+
+
+#tamanhos dos lockers
+
+
 def cadastrar_morador():
     nome = input("Nome do morador: ")
     numero_apartamento = input("Número do apartamento: ")
@@ -82,19 +53,30 @@ def cadastrar_morador():
         return
     tamanho_locker = input("Tamanho do locker (P/M/G): ").upper()
 
+    # Cria o morador
     novo_morador = Morador(nome)
     moradores.append(novo_morador)
 
-    novo_apartamento = Predio(numero_apartamento)
+    # Cria o apartamento (e adiciona à lista de apartamentos)
+    novo_apartamento = predio(numero_apartamento)
     apartamentos.append(numero_apartamento)
 
+    # Cria o locker vinculado ao apartamento
     novo_locker = Locker(tamanho_locker)
     novo_locker.apartamento = numero_apartamento
     lockers.append(novo_locker)
 
     print(f"Morador {nome} cadastrado no apartamento {numero_apartamento} com locker tamanho {tamanho_locker}.")
 
-# Função para realizar entrega
+    
+#listagens (armazenamento de informações)
+
+moradores = []
+apartamentos = []
+lockers = [Locker('P'), Locker('M'), Locker('G')]  # Exemplo de 3 lockers, um de cada tamanho
+SENHA_SINDICO = "1234" #senha mestra usada na retirar_produtos
+
+# Funções  
 def realizar_entrega():
     tamanho = input("Tamanho do pacote (P/M/G): ").upper()
     apartamento = input("Número do apartamento: ")
@@ -107,7 +89,6 @@ def realizar_entrega():
             return
     print("Não há lockers disponíveis desse tamanho.")
 
-# Função para retirada de produto
 def retirar_produto():
     apartamento = input("Número do apartamento: ")
     senha = input("Senha recebida: ")
@@ -124,14 +105,15 @@ def retirar_produto():
             return
     print("Nenhum locker encontrado para esse apartamento.")
 
-# Status dos lockers
+
+# status locker do 3 
 def status_locker():
     print("\nStatus dos Lockers:")
     for i, locker in enumerate(lockers, 1):
         status = "Disponível" if locker.disponivel else f"Ocupado (Apto: {locker.apartamento})"
         print(f"{i} - Locker {locker.tamanho}: {status}")
 
-# Status dos apartamentos com entregas
+
 def status_apartamento():
     print("\nStatus dos Apartamentos com entregas:")
     encontrou = False
