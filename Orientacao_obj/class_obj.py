@@ -1,14 +1,5 @@
 # Sistema de locker de entrega de produtos
 
-<<<<<<< HEAD
-class Predio:
-    def __init__(self, numeracao_casa: int) -> None:
-        self.__numeracao_casa = numeracao_casa
-
-    @property
-    def numeracao_casa(self):
-        return self.__numeracao_casa
-=======
 # Sistema de locker de entrega de produtos
 
 
@@ -21,7 +12,6 @@ class Predio:
     def numeracao_casa(self):
         return self.__numeracao_casa
 
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 
 class Locker:
 
@@ -64,13 +54,13 @@ class Locker:
         self.__disponivel = False
         self.__apartamento = apartamento
         self.__senha = str(random.randint(1000, 9999))
-<<<<<<< HEAD
+
         print(f"Entrega registrada! Senha enviada para o apartamento {apartamento}: {self.__senha}")
-=======
+
         print(
             f"Entrega registrada! Senha enviada para o apartamento {apartamento}: {self.__senha}"
         )
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
+
 
     def retirar(self, senha: str):
         if self.__senha == senha:
@@ -83,10 +73,10 @@ class Locker:
 
 
 class Morador:
-<<<<<<< HEAD
+
     def __init__(self, nome: str):
         self.__nome = nome
-=======
+
 
     def __init__(self, nome: str):
         self.__nome = nome
@@ -94,7 +84,7 @@ class Morador:
     @property
     def nome(self):
         return self.__nome
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
+
 
     @property
     def nome(self):
@@ -102,18 +92,11 @@ class Morador:
 
 # Listas globais protegidas (por convenção, mas não há encapsulamento real em listas globais)
 moradores = []
-<<<<<<< HEAD
-apartamentos = []
-lockers = []
-SENHA_SINDICO = "1234"  # senha mestra usada na retirar_produtos
-
-=======
 apartamentos = []  # Agora armazena objetos Predio
 lockers = []
 SENHA_SINDICO = "1234"  # senha mestra usada na retirar_produtos
 
 
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 # Cadastro de morador, apartamento e locker
 def cadastrar_morador():
     nome = input("Nome do morador: ")
@@ -128,13 +111,8 @@ def cadastrar_morador():
     novo_morador = Morador(nome)
     moradores.append(novo_morador)
 
-<<<<<<< HEAD
-    novo_apartamento = Predio(numero_apartamento)
-    apartamentos.append(numero_apartamento)
-=======
     novo_apartamento = Predio(int(numero_apartamento))
     apartamentos.append(novo_apartamento)
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 
     novo_locker = Locker(tamanho_locker)
     novo_locker.apartamento = int(numero_apartamento)
@@ -144,10 +122,6 @@ def cadastrar_morador():
         f"Morador {nome} cadastrado no apartamento {numero_apartamento} com locker tamanho {tamanho_locker}."
     )
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 # Função para realizar entrega
 def realizar_entrega():
     tamanho = input("Tamanho do pacote (P/M/G): ").upper()
@@ -161,10 +135,6 @@ def realizar_entrega():
             return
     print("Não há lockers disponíveis desse tamanho.")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 # Função para retirada de produto
 def retirar_produto():
     apartamento = input("Número do apartamento: ")
@@ -182,10 +152,6 @@ def retirar_produto():
             return
     print("Nenhum locker encontrado para esse apartamento.")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 # Status dos lockers
 def status_locker():
     print("\nStatus dos Lockers:")
@@ -193,10 +159,7 @@ def status_locker():
         status = "Disponível" if locker.disponivel else f"Ocupado (Apto: {locker.apartamento})"
         print(f"{i} - Locker {locker.tamanho}: {status}")
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 85b7fa6ef8f141126921d6425004410e384839d4
 # Status dos apartamentos com entregas
 def status_apartamento():
     print("\nStatus dos Apartamentos com entregas:")
