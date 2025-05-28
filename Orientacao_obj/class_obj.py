@@ -1,107 +1,136 @@
-# Você deverá criar um sistema de locker de entrega de produtos.
-# Lógica: O entregador realiza a entrega de um produto escolhendo a opção ENTREGA.
-#               Informa o tamanho do pacote, o apartamento e finaliza a entrega. O sistema envia uma mensagem ao nome do apartamento cadastrado com uma senha gerada aleatóriamente.
-#
-#.             O morador, ao retirar o produto, informa o apartamento e a senha, o locker "Abre". O morador Finaliza a retirada e o locker é liberado.
-#
-#.             Em configurações deve existir uma opção de cadastro, onde o usuário irá cadastrar o apartamento e uma senha para utilizar o locker.
+# Sistema de locker de entrega de produtos
 
-# objetos
-#   Morador
-#   def Nome
-# predio
-#   def numeracao_casa
+# Sistema de locker de entrega de produtos
 
-class predio:
 
-  def __init__(self, numeracao_casa: int) -> None:
-    self.numeracao_casa = numeracao_casa
-    pass
-  
+class Predio:
+
+    def __init__(self, numeracao_casa: int) -> None:
+        self.__numeracao_casa = numeracao_casa
+
+    @property
+    def numeracao_casa(self):
+        return self.__numeracao_casa
+
+
 class Locker:
+
     def __init__(self, tamanho: str) -> None:
-        self.tamanho = tamanho  # 'P', 'M' ou 'G'
-        self.disponivel = True
-        self.apartamento = None
-        self.senha = None
+        self.__tamanho = tamanho
+        self.__disponivel = True
+        self.__apartamento = None
+        self.__senha = None
+
+    @property
+    def tamanho(self):
+        return self.__tamanho
+
+    @property
+    def disponivel(self):
+        return self.__disponivel
+
+    @disponivel.setter
+    def disponivel(self, valor):
+        self.__disponivel = valor
+
+    @property
+    def apartamento(self):
+        return self.__apartamento
+
+    @apartamento.setter
+    def apartamento(self, valor):
+        self.__apartamento = valor
+
+    @property
+    def senha(self):
+        return self.__senha
+
+    @senha.setter
+    def senha(self, valor):
+        self.__senha = valor
 
     def entregar(self, apartamento: int):
         import random
-        self.disponivel = False
-        self.apartamento = apartamento
-        self.senha = str(random.randint(1000, 9999))
-        print(f"Entrega registrada! Senha enviada para o apartamento {apartamento}: {self.senha}")
+        self.__disponivel = False
+        self.__apartamento = apartamento
+        self.__senha = str(random.randint(1000, 9999))
+        print(
+            f"Entrega registrada! Senha enviada para o apartamento {apartamento}: {self.__senha}"
+        )
 
     def retirar(self, senha: str):
-        if self.senha == senha:
+        if self.__senha == senha:
             print("Locker aberto! Retire seu produto.")
-            self.disponivel = True
-            self.apartamento = None
-            self.senha = None
+            self.__disponivel = True
+            self.__apartamento = None
+            self.__senha = None
         else:
             print("Senha incorreta.")
 
+
 class Morador:
-    
+
     def __init__(self, nome: str):
-        self.nome = nome
+        self.__nome = nome
+
+    @property
+    def nome(self):
+        return self.__nome
 
 
+# Listas globais protegidas (por convenção, mas não há encapsulamento real em listas globais)
+moradores = []
+apartamentos = []  # Agora armazena objetos Predio
+lockers = []
+SENHA_SINDICO = "1234"  # senha mestra usada na retirar_produtos
 
 
-
-#tamanhos dos lockers
-
-
+# Cadastro de morador, apartamento e locker
 def cadastrar_morador():
     nome = input("Nome do morador: ")
     numero_apartamento = input("Número do apartamento: ")
-    if numero_apartamento in apartamentos:
+    # Verifica se já existe um apartamento com essa numeração
+    if any(ap.numeracao_casa == int(numero_apartamento)
+           for ap in apartamentos):
         print("Este apartamento já possui um locker cadastrado!")
         return
     tamanho_locker = input("Tamanho do locker (P/M/G): ").upper()
 
-    # Cria o morador
     novo_morador = Morador(nome)
     moradores.append(novo_morador)
 
-    # Cria o apartamento (e adiciona à lista de apartamentos)
-    novo_apartamento = predio(numero_apartamento)
-    apartamentos.append(numero_apartamento)
+    novo_apartamento = Predio(int(numero_apartamento))
+    apartamentos.append(novo_apartamento)
 
-    # Cria o locker vinculado ao apartamento
     novo_locker = Locker(tamanho_locker)
-    novo_locker.apartamento = numero_apartamento
+    novo_locker.apartamento = int(numero_apartamento)
     lockers.append(novo_locker)
 
-    print(f"Morador {nome} cadastrado no apartamento {numero_apartamento} com locker tamanho {tamanho_locker}.")
+    print(
+        f"Morador {nome} cadastrado no apartamento {numero_apartamento} com locker tamanho {tamanho_locker}."
+    )
 
-    
-#listagens (armazenamento de informações)
 
-moradores = []
-apartamentos = []
-lockers = [Locker('P'), Locker('M'), Locker('G')]  # Exemplo de 3 lockers, um de cada tamanho
-SENHA_SINDICO = "1234" #senha mestra usada na retirar_produtos
-
-# Funções  
+# Função para realizar entrega
 def realizar_entrega():
     tamanho = input("Tamanho do pacote (P/M/G): ").upper()
     apartamento = input("Número do apartamento: ")
-    if apartamento not in apartamentos:
+    if not any(ap.numeracao_casa == int(apartamento) for ap in apartamentos):
         print("Apartamento não cadastrado no prédio!")
         return
     for locker in lockers:
         if locker.tamanho == tamanho and locker.disponivel:
-            locker.entregar(apartamento)
+            locker.entregar(int(apartamento))
             return
     print("Não há lockers disponíveis desse tamanho.")
 
+
+# Função para retirada de produto
 def retirar_produto():
     apartamento = input("Número do apartamento: ")
     senha = input("Senha recebida: ")
     for locker in lockers:
-        if locker.apartamento == apartamento and not locker.disponivel:
+        if locker.apartamento == int(apartamento) and not locker.disponivel:
             if senha == SENHA_SINDICO:
                 print("Acesso de síndico autorizado.")
                 locker.disponivel = True
@@ -114,7 +143,7 @@ def retirar_produto():
     print("Nenhum locker encontrado para esse apartamento.")
 
 
-# status locker do 3 
+# Status dos lockers
 def status_locker():
     print("\nStatus dos Lockers:")
     for i, locker in enumerate(lockers, 1):
@@ -122,12 +151,24 @@ def status_locker():
         print(f"{i} - Locker {locker.tamanho}: {status}")
 
 
+# Status dos apartamentos com entregas
 def status_apartamento():
     print("\nStatus dos Apartamentos com entregas:")
     encontrou = False
     for locker in lockers:
         if not locker.disponivel:
-            print(f"Apartamento {locker.apartamento} possui entrega no locker {locker.tamanho}.")
+            # Busca o objeto Predio correspondente ao apartamento
+            predio_obj = next((ap for ap in apartamentos
+                               if ap.numeracao_casa == locker.apartamento),
+                              None)
+            if predio_obj:
+                print(
+                    f"Apartamento {locker.apartamento} (Casa: {predio_obj.numeracao_casa}) possui entrega no locker {locker.tamanho}."
+                )
+            else:
+                print(
+                    f"Apartamento {locker.apartamento} possui entrega no locker {locker.tamanho}."
+                )
             encontrou = True
     if not encontrou:
         print("Nenhum apartamento possui entregas no momento.")
