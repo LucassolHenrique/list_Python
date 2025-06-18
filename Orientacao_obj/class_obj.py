@@ -2,7 +2,20 @@
 
 # Sistema de locker de entrega de produtos
 
+import json
+import os
 
+def inicializar_lockers_do_json():
+    caminho = os.path.join(os.path.dirname(__file__), "lockers_config.json")
+    if not os.path.exists(caminho):
+        print("Arquivo lockers_config.json não encontrado!")
+        return
+    with open(caminho, "r") as f:
+        config = json.load(f)
+    for tamanho, quantidade in config.items():
+        for _ in range(quantidade):
+            lockers.append(Locker(tamanho))
+            
 class Predio:
 
     def __init__(self, numeracao_casa: int) -> None:
@@ -98,29 +111,21 @@ SENHA_SINDICO = "1234"  # senha mestra usada na retirar_produtos
 
 
 # Cadastro de morador, apartamento e locker
-def cadastrar_morador():
-    nome = input("Nome do morador: ")
-    numero_apartamento = input("Número do apartamento: ")
-    # Verifica se já existe um apartamento com essa numeração
-    if any(ap.numeracao_casa == int(numero_apartamento)
-           for ap in apartamentos):
-        print("Este apartamento já possui um locker cadastrado!")
-        return
-    tamanho_locker = input("Tamanho do locker (P/M/G): ").upper()
+# def cadastrar_morador():
+#     nome = input("Nome do morador: ")
+#     numero_apartamento = input("Número do apartamento: ")
+#     if any(ap.numeracao_casa == int(numero_apartamento) for ap in apartamentos):
+#         print("Este apartamento já possui um locker cadastrado!")
+#         return
 
-    novo_morador = Morador(nome)
-    moradores.append(novo_morador)
+#     novo_morador = Morador(nome)
+#     moradores.append(novo_morador)
 
-    novo_apartamento = Predio(int(numero_apartamento))
-    apartamentos.append(novo_apartamento)
+#     novo_apartamento = Predio(int(numero_apartamento))
+#     apartamentos.append(novo_apartamento)
 
-    novo_locker = Locker(tamanho_locker)
-    novo_locker.apartamento = int(numero_apartamento)
-    lockers.append(novo_locker)
+#     print(f"Morador {nome} cadastrado no apartamento {numero_apartamento}.")
 
-    print(
-        f"Morador {nome} cadastrado no apartamento {numero_apartamento} com locker tamanho {tamanho_locker}."
-    )
 
 # Função para realizar entrega
 def realizar_entrega():
