@@ -1,7 +1,7 @@
 import json
 import os
 
-# A senha foi unificada para 9999 conforme a exigência da "senha geral"
+# A senha foi unificada para 9999 conforme a exigência da senha geral
 SENHA_SINDICO = "9999" 
 moradores = []
 apartamentos = [] 
