@@ -1,4 +1,15 @@
 # Sistema de locker de entrega de produtos
+# CRIAR UMA INTERFACE COM PYTHON
+# O LOCKER POR PADRÃO NO JSON VEM UMA QUANTIDADE
+# E DEVE CONSEGUIR CRIAR MAIS LOCKERS FORA DO JSON APENAS SALVO MOMENTAMENTE NO PLAY
+# O SINDICO VAI TER UMA SENHA PARA CONSEGUIR CRIAR ESSES NOVOS LOCKERS COM TAMANHOS E QUANTIDADE,
+# PARA EXCLUIR UM MORADOR PRECISA DA SENHA DO SINDICO
+# SINDICO PRECISA TER ACESSO A QUALQUER LOCKER POR CONTA DA SUA CHAVE MESTRA CONSEGUINDO ABRIR/ACESSAR OS LOCKER
+# MODERADOR PODE ALTERAR SEUS PROPRIOS DADOS, NÃO INSERIR NOVOS NEM EXLUIR.
+# ESSES DADOS DOS MORADORES PRECISAM ESTAR EM UM JSON SALVOS OU EM UM DB
+# Sistema de locker de entrega de produtos
+
+# Sistema de locker de entrega de produtos
 
 # Sistema de locker de entrega de produtos
 
@@ -110,22 +121,35 @@ lockers = []
 SENHA_SINDICO = "1234"  # senha mestra usada na retirar_produtos
 
 
-# Cadastro de morador, apartamento e locker
-# def cadastrar_morador():
-#     nome = input("Nome do morador: ")
-#     numero_apartamento = input("Número do apartamento: ")
-#     if any(ap.numeracao_casa == int(numero_apartamento) for ap in apartamentos):
-#         print("Este apartamento já possui um locker cadastrado!")
-#         return
+def cadastrar_morador():
+    nome = input("Nome do morador: ")
+    numero_apartamento = input("Número do apartamento: ")
+    if any(ap.numeracao_casa == int(numero_apartamento) for ap in apartamentos):
+        print("Este apartamento já possui um locker cadastrado!")
+        return
 
-#     novo_morador = Morador(nome)
-#     moradores.append(novo_morador)
+    novo_morador = Morador(nome)
+    moradores.append(novo_morador)
 
-#     novo_apartamento = Predio(int(numero_apartamento))
-#     apartamentos.append(novo_apartamento)
+    novo_apartamento = Predio(int(numero_apartamento))
+    apartamentos.append(novo_apartamento)
 
-#     print(f"Morador {nome} cadastrado no apartamento {numero_apartamento}.")
+    print(f"Morador {nome} cadastrado no apartamento {numero_apartamento}.")
 
+#JSON SALVA OS MORADORES
+def salvar_moradores_json():
+    with open("moradores.json", "w") as f:
+        json.dump([{"nome": m.nome} for m in moradores], f)
+
+def alterar_dados_morador():
+    nome_atual = input("Digite seu nome atual: ")
+    morador = next((m for m in moradores if m.nome == nome_atual), None)
+    if not morador:
+        print("Morador não encontrado.")
+        return
+    novo_nome = input("Digite o novo nome: ")
+    morador._Morador__nome = novo_nome  # ou crie um setter
+    print("Nome alterado com sucesso!")
 
 # Função para realizar entrega
 def realizar_entrega():
@@ -164,6 +188,23 @@ def status_locker():
         status = "Disponível" if locker.disponivel else f"Ocupado (Apto: {locker.apartamento})"
         print(f"{i} - Locker {locker.tamanho}: {status}")
 
+#excluir morador
+def excluir_morador():
+    senha = input("Digite a senha do síndico: ")
+    if senha != SENHA_SINDICO:
+        print("Senha incorreta!")
+        return
+    nome = input("Nome do morador a excluir: ")
+    removido = False
+    for m in moradores[:]:
+        if m.nome == nome:
+            moradores.remove(m)
+            removido = True
+    if removido:
+        print(f"Morador {nome} removido com sucesso!")
+    else:
+        print("Morador não encontrado.")
+
 
 # Status dos apartamentos com entregas
 def status_apartamento():
@@ -186,3 +227,13 @@ def status_apartamento():
             encontrou = True
     if not encontrou:
         print("Nenhum apartamento possui entregas no momento.")
+
+#ADD DE INFORMAÇÕES JSON 
+def carregar_moradores_json():
+    try:
+        with open("moradores.json", "r") as f:
+            lista = json.load(f)
+            for item in lista:
+                moradores.append(Morador(item["nome"]))
+    except FileNotFoundError:
+        pass
