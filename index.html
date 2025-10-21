@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Jogo da Vida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Meu Jogo da Vida</h1>
+            <div class="points-display">
+                <span class="points">{{ dados.pontos_totais }}</span>
+                <span class="points-label">Pontos</span>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <main class="main-content">
+            <div class="card tasks">
+                <h2>✅ Concluir Tarefa</h2>
+                <form action="/completar_tarefa" method="post">
+                    {% for nome, pontos in dados.tarefas.items() %}
+                        <button type="submit" name="tarefa" value="{{ nome }}">
+                            {{ nome }} <span>+{{ pontos }} pts</span>
+                        </button>
+                    {% endfor %}
+                </form>
+            </div>
+
+            <div class="card rewards">
+                <h2>🎁 Resgatar Recompensa</h2>
+                <form action="/resgatar_recompensa" method="post">
+                    {% for nome, custo in dados.recompensas.items() %}
+                        <button type="submit" name="recompensa" value="{{ nome }}" 
+                                {% if dados.pontos_totais < custo %}disabled{% endif %}>
+                            {{ nome }} <span>{{ custo }} pts</span>
+                        </button>
+                    {% endfor %}
+                </form>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
